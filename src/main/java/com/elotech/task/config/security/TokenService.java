@@ -16,12 +16,16 @@ public class TokenService {
 
     private static final String ISSUER = "task-api";
 
-    private final long timeExpiration = 2L;
+    private final long timeExpiration;
 
     private final Algorithm algorithm;
 
-    public TokenService(@Value("${api.security.token.secret}") String secret){
+    public TokenService(
+            @Value("${api.security.token.secret}") String secret,
+            @Value("${api.security.token.expiration}") long timeExpiration
+    ){
         this.algorithm = Algorithm.HMAC256(secret);
+        this.timeExpiration = timeExpiration;
     }
 
     public String generateToken(User user){
@@ -45,7 +49,7 @@ public class TokenService {
                     .verify(token)
                     .getSubject();
 
-        } catch (JWTCreationException exception) {
+        } catch (com.auth0.jwt.exceptions.JWTVerificationException exception) {
             return"";
         }
     }
