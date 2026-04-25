@@ -1,16 +1,28 @@
 package com.elotech.task.config;
 
 import com.elotech.task.config.security.SecurityFilter;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+    private static final String[] PUBLIC_POST_ROUTES = {
+      "/users",
+      "/login"
+    };
 
     private final SecurityFilter securityFilter;
 
@@ -24,19 +36,17 @@ public class SecurityConfig {
                 // Protecao CSRF desabilitada
                 .csrf(csrf -> csrf.disable())
 
-                // Iframes H2
-                .headers(headers -> headers.frameOptions(frame -> frame.disable()))
+                // Session sem estado
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-                // Rota liberada para H2 e users
+                // Rota liberada para PUBLIC_POST_ROUTES
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/h2-console/**").permitAll()
-                        .requestMatchers(org.springframework.http.HttpMethod.POST, "/users").permitAll()
-                        .requestMatchers(org.springframework.http.HttpMethod.POST, "login").permitAll()
+                        .requestMatchers(HttpMethod.POST, PUBLIC_POST_ROUTES).permitAll()
                         .anyRequest().authenticated()
                 )
 
                 // Carrega a SecurityFilter para validacao das requisicoes
-                .addFilterBefore(securityFilter, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -48,10 +58,14 @@ public class SecurityConfig {
     }
 
     @Bean
-    public org.springframework.security.authentication.AuthenticationManager authenticationManager(
-            // Injecao de dependencia para validar credenciais
-            org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration configuration) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+        // Injecao de dependencia para validar credenciais
         return configuration.getAuthenticationManager();
+    }
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer(){
+        return (web) -> web.ignoring().requestMatchers(PathRequest.toH2Console());
     }
 
 }

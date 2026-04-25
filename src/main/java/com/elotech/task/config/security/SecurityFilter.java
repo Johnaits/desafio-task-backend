@@ -42,7 +42,7 @@ public class SecurityFilter extends OncePerRequestFilter {
             String login = this.tokenService.validateToken(token);
 
             // E-mail existe no token e o User será carregado
-            if(!login.isEmpty()){
+            if(login !=null && !login.isEmpty()){
                 UserDetails user = userRepository.findByEmail(login).orElse(null);
 
                 if(user != null){
