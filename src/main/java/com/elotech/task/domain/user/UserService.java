@@ -22,17 +22,16 @@ public class UserService {
                 data.email(),
                 data.password()
         );
-        return this.save(newUser);
-
+        String pass = passwordEncoder.encode(newUser.getPassword());
+        newUser.setPassword(pass);
+        return userRepository.save(newUser);
     }
 
-    public User save(User user){
-        String pass = passwordEncoder.encode(user.getPassword());
-        user.setPassword(pass);
-        return userRepository.save(user);
+    public User findById(Long id){
+        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
     }
 
-    public User findByEmail(String email){
-        return userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+    public boolean existsByEmail(String email){
+        return userRepository.findByEmail(email).isPresent();
     }
 }
