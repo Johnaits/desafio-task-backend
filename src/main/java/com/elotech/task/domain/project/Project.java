@@ -19,11 +19,11 @@ public class Project {
     @Column(nullable = false, length = 50)
     private String name;
 
-    @Column(nullable = true, length = 250)
+    @Column(length = 250)
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_user", nullable = false)
+    @JoinColumn(name = "id_user", referencedColumnName = "id", nullable = false)
     private User owner;
 
     @CreatedDate

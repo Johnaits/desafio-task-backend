@@ -13,14 +13,8 @@ public class ProjectService {
 
     private final ProjectRepository projectRepository;
 
-    private final UserService userService;
-
-    public ProjectService(
-            ProjectRepository projectRepository,
-            UserService userService
-    ){
+    public ProjectService(ProjectRepository projectRepository){
         this.projectRepository = projectRepository;
-        this.userService = userService;
     }
 
     public Page<Project> findAll(User owner, Pageable pageable){
