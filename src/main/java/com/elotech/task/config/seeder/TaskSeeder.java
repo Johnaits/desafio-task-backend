@@ -53,7 +53,7 @@ public class TaskSeeder implements CommandLineRunner {
         Project project = this.projectRepository.findAll().stream().findFirst()
                 .orElseThrow(() -> new RuntimeException("Nenhum projeto encontrado para vincular as tarefas."));
 
-        // Criando Tarefa 1 (TODO)
+        // Criando Tarefa 1 (TO-DO)
         this.taskService.create(new TaskRequestDTO(
                 project.getId(),
                 "Modelagem do Banco de Dados",
