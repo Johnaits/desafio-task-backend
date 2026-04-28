@@ -2,6 +2,7 @@ package com.elotech.task.domain.task;
 
 import com.elotech.task.domain.project.Project;
 import com.elotech.task.domain.project.ProjectService;
+import com.elotech.task.domain.task.dto.TaskFilterSpecificationDTO;
 import com.elotech.task.domain.task.dto.TaskRequestDTO;
 import com.elotech.task.domain.task.rules.TaskRule;
 import com.elotech.task.domain.user.User;
@@ -10,6 +11,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -90,8 +92,21 @@ public class TaskService {
         this.taskRepository.delete(task);
     }
 
-    public Page<Task> findAll(User userLogged, Pageable pageable){
-        return this.taskRepository.findAllTasksByOwnerOrByMember(userLogged, pageable);
+    public Page<Task> findAll(
+            User userLogged,
+            TaskFilterSpecificationDTO filterSpecification,
+            Pageable pageable
+    ){
+        Specification<Task> spec = TaskSpecifications.userHasAccess(userLogged);
+
+        spec = spec.and(TaskSpecifications.hasStatus(filterSpecification.status()))
+                .and(TaskSpecifications.hasPriority(filterSpecification.priority()))
+                .and(TaskSpecifications.hasAssignee(filterSpecification.idAssignee()))
+                .and(TaskSpecifications.haveCreatedAt(filterSpecification.startCreatedAt(), filterSpecification.endCreatedAt()))
+                .and(TaskSpecifications.haveDeadline(filterSpecification.startDeadline(), filterSpecification.endDeadline()))
+                .and(TaskSpecifications.searchTerm(filterSpecification.query()));
+
+        return this.taskRepository.findAll(spec, pageable);
     }
 
     public Task findById(Long id, User userLogged){

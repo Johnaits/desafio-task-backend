@@ -1,5 +1,6 @@
 package com.elotech.task.domain.task;
 
+import com.elotech.task.domain.task.dto.TaskFilterSpecificationDTO;
 import com.elotech.task.domain.task.dto.TaskRequestDTO;
 import com.elotech.task.domain.task.dto.TaskResponseDTO;
 import com.elotech.task.domain.user.User;
@@ -57,9 +58,11 @@ public class TaskController {
     @GetMapping
     public Page<TaskResponseDTO> get(
             @AuthenticationPrincipal User loggedUser,
-            @PageableDefault(size = 10, sort="createdAt")Pageable pageable
+            TaskFilterSpecificationDTO filterSpecification,
+            @PageableDefault(size = 10, sort="createdAt") Pageable pageable
     ){
-        return this.taskService.findAll(loggedUser, pageable).map(TaskResponseDTO::new);
+        return this.taskService.findAll(loggedUser, filterSpecification, pageable)
+                .map(TaskResponseDTO::new);
     }
 
     @GetMapping("/{id}")
