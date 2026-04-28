@@ -24,6 +24,13 @@ public class SecurityConfig {
       "/login"
     };
 
+    private static final String[] PUBLIC_GET_ROUTES_SWAGGER = {
+            "/v3/api-docs",
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/swagger-ui.html"
+    };
+
     private final SecurityFilter securityFilter;
 
     public SecurityConfig(SecurityFilter securityFilter){
@@ -42,6 +49,7 @@ public class SecurityConfig {
                 // Rota liberada para PUBLIC_POST_ROUTES
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, PUBLIC_POST_ROUTES).permitAll()
+                        .requestMatchers(PUBLIC_GET_ROUTES_SWAGGER).permitAll()
                         .anyRequest().authenticated()
                 )
 

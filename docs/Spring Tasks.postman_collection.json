@@ -1,0 +1,562 @@
+{
+  "info": {
+    "_postman_id": "6a268a30-5d17-4e34-90d2-8a0842debd1e",
+    "name": "Spring Tasks",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "31611325"
+  },
+  "item": [
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "CreateUser",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Johny Kerstin\",\r\n    \"email\": \"johny.kerstin@gmail.com\",\r\n    \"password\": \"johny@kerstin\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Johny Kerstin\",\r\n    \"email\": \"johny.kerstin@gmail.com\",\r\n    \"password\": \"johny@kerstin\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "LoginSeeder",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"teste\",\r\n    \"email\": \"testeApiApplication@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Projects",
+      "item": [
+        {
+          "name": "Members",
+          "item": [
+            {
+              "name": "CreateMembers",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ0YXNrLWFwaSIsInN1YiI6InRlc3RlQXBpQXBwbGljYXRpb25AZ21haWwuY29tIiwiZXhwIjoxNzc3MzQ2NTA2fQ.Pm3ZyHYV7Mq-cXA1-W6998t2sy0AHg-84siKmsybwfE",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"userIds\": [1,2]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/projects/1/members",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "projects",
+                    "1",
+                    "members"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "DeleteMembers",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ0YXNrLWFwaSIsInN1YiI6InRlc3RlQXBpQXBwbGljYXRpb25AZ21haWwuY29tIiwiZXhwIjoxNzc3MTY3MjEwfQ.Ka-E6EbrRr33yPWzcht8TnoF5yhyqsuMvnRLROGJmBw",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:8080/projects/1/members?userIds=2",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "projects",
+                    "1",
+                    "members"
+                  ],
+                  "query": [
+                    {
+                      "key": "userIds",
+                      "value": "2"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "CreateProject",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ0YXNrLWFwaSIsInN1YiI6InRlc3RlQXBpQXBwbGljYXRpb25AZ21haWwuY29tIiwiZXhwIjoxNzc3MzE5Njk1fQ.qcnWd_4rmGXFNfUiKbGnDnV6phSKUep2CnTwUT2b1YE",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Projeto 1\",\r\n    \"description\": \"Projeto de teste 1\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/projects",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "projects"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetProject",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ0YXNrLWFwaSIsInN1YiI6InRlc3RlQXBpQXBwbGljYXRpb25AZ21haWwuY29tIiwiZXhwIjoxNzc3MzQ1NTU5fQ.16hE4kgSJc6hD5fs1snw615r5W5KRzL_B69f8kyBUxk",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/projects",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "projects"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetProjectById",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ0YXNrLWFwaSIsInN1YiI6InRlc3RlQXBpQXBwbGljYXRpb25AZ21haWwuY29tIiwiZXhwIjoxNzc3MzI0NjM2fQ.1AtOlFDq2Gks3_MiucZnnz0Akg4alZy9loP9izhgAfI",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/projects/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "projects",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UpdateProject",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ0YXNrLWFwaSIsInN1YiI6ImpvaG55LmtlcnN0aW5AZ21haWwuY29tIiwiZXhwIjoxNzc3MzE5NzM5fQ.vKiIXc6VDwbNwME0hu_x-D65oL6vv4bBgb2bTz-RBIY",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Projeto 2\",\r\n    \"description\": \"Projeto de teste 1\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/projects/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "projects",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DeleteProject",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ0YXNrLWFwaSIsInN1YiI6InRlc3RlQXBpQXBwbGljYXRpb25AZ21haWwuY29tIiwiZXhwIjoxNzc3MzE0NTU4fQ.BzNu8qleDAqxoHRDPIPuxIavY7gMz46eP6Ql5l8ZDjM",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/projects/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "projects",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Tasks",
+      "item": [
+        {
+          "name": "CreateTask",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ0YXNrLWFwaSIsInN1YiI6InRlc3RlQXBpQXBwbGljYXRpb25AZ21haWwuY29tIiwiZXhwIjoxNzc3Mzg0MTI5fQ.g0xhHVr8BnGnL9s4tkwaEdlOf1IDK6kRtnFpmlg0RE8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Modelar banco de dados\",\r\n  \"description\": \"Criar as tabelas principais e de histórico com base no diagrama aprovado.\",\r\n  \"status\": \"IN_PROGRESS\",\r\n  \"priority\": \"HIGH\",\r\n  \"deadline\": \"2026-04-30\",\r\n  \"idProject\": 1,\r\n  \"idAssignee\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/tasks",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "tasks"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DeleteTask",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ0YXNrLWFwaSIsInN1YiI6InRlc3RlQXBpQXBwbGljYXRpb25AZ21haWwuY29tIiwiZXhwIjoxNzc3MzQ2NTA2fQ.Pm3ZyHYV7Mq-cXA1-W6998t2sy0AHg-84siKmsybwfE",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/tasks/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "tasks",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UpdateTask",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ0YXNrLWFwaSIsInN1YiI6InRlc3RlQXBpQXBwbGljYXRpb25AZ21haWwuY29tIiwiZXhwIjoxNzc3Mzg0MTI5fQ.g0xhHVr8BnGnL9s4tkwaEdlOf1IDK6kRtnFpmlg0RE8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Implementar Front End\",\r\n  \"description\": \"Criar as principais rotas e abstrair busca de token\",\r\n  \"status\": \"DONE\",\r\n  \"priority\": \"CRITICAL\",\r\n  \"deadline\": \"2026-05-10\",\r\n  \"idProject\": 1,\r\n  \"idAssignee\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/tasks/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "tasks",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetTask",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ0YXNrLWFwaSIsInN1YiI6InRlc3RlQXBpQXBwbGljYXRpb25AZ21haWwuY29tIiwiZXhwIjoxNzc3MzQ1NTU5fQ.16hE4kgSJc6hD5fs1snw615r5W5KRzL_B69f8kyBUxk",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/tasks",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "tasks"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetTaskById",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ0YXNrLWFwaSIsInN1YiI6InRlc3RlQXBpQXBwbGljYXRpb25AZ21haWwuY29tIiwiZXhwIjoxNzc3MzQ1NTU5fQ.16hE4kgSJc6hD5fs1snw615r5W5KRzL_B69f8kyBUxk",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/tasks/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "tasks",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "ReportTask",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ0YXNrLWFwaSIsInN1YiI6InRlc3RlQXBpQXBwbGljYXRpb25AZ21haWwuY29tIiwiZXhwIjoxNzc3Mzg0MTI5fQ.g0xhHVr8BnGnL9s4tkwaEdlOf1IDK6kRtnFpmlg0RE8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/tasks/1/report",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "tasks",
+                "1",
+                "report"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
