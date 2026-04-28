@@ -3,6 +3,7 @@ package com.elotech.task.domain.task;
 import com.elotech.task.domain.project.Project;
 import com.elotech.task.domain.project.ProjectService;
 import com.elotech.task.domain.task.dto.TaskFilterSpecificationDTO;
+import com.elotech.task.domain.task.dto.TaskReportDTO;
 import com.elotech.task.domain.task.dto.TaskRequestDTO;
 import com.elotech.task.domain.task.rules.TaskRule;
 import com.elotech.task.domain.user.User;
@@ -111,6 +112,11 @@ public class TaskService {
 
     public Task findById(Long id, User userLogged){
         return this.taskRepository.findByIdAndOwnerOrMember(id, userLogged).orElseThrow( () -> new EntityNotFoundException("Tarefa de ID " + id + " não encontrada para este responsável"));
+    }
+
+    public List<TaskReportDTO> getProjectReport(Long idProject, User user){
+        this.projectService.findById(idProject, user);
+        return this.taskRepository.getTaskReportByProject(idProject);
     }
 
     private User getAssigneeIfExists(Long idAssignee) {

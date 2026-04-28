@@ -1,6 +1,7 @@
 package com.elotech.task.domain.task;
 
 import com.elotech.task.domain.task.dto.TaskFilterSpecificationDTO;
+import com.elotech.task.domain.task.dto.TaskReportDTO;
 import com.elotech.task.domain.task.dto.TaskRequestDTO;
 import com.elotech.task.domain.task.dto.TaskResponseDTO;
 import com.elotech.task.domain.user.User;
@@ -12,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/tasks")
@@ -72,5 +75,14 @@ public class TaskController {
     ){
         Task task = this.taskService.findById(id, loggedUser);
         return ResponseEntity.ok(new TaskResponseDTO(task));
+    }
+
+    @GetMapping("/{id}/report")
+    public ResponseEntity<List<TaskReportDTO>> getReport(
+            @PathVariable Long id,
+            @AuthenticationPrincipal User user
+    ){
+        List<TaskReportDTO> report = this.taskService.getProjectReport(id, user);
+        return ResponseEntity.ok(report);
     }
 }
