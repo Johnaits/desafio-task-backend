@@ -1,11 +1,13 @@
 package com.elotech.task.infra.exception;
 
 import com.elotech.task.infra.exception.dto.FieldErrorDTO;
+import com.elotech.task.utils.Debug;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -57,5 +59,18 @@ public class GlobalExceptionHandler {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "Violação na integridade dos dados");
         problemDetail.setTitle("Dado inválido");
         return problemDetail;
+    }
+
+    @ExceptionHandler(AuthorizationDeniedException.class)
+    public ProblemDetail handleNoAccess(AuthorizationDeniedException ex){
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.FORBIDDEN, "Usuário não possui autorização para essa ação");
+        problemDetail.setTitle("Sem autorização");
+        return problemDetail;
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ProblemDetail handleUnexpectatedError(Exception e){
+        Debug.info("Erro incomum (%s): %s".formatted(e.getClass().getName(), e.getMessage()));
+        return ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, "Erro desconhecido");
     }
 }
