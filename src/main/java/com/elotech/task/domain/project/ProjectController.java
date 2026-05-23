@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/projects")
+@PreAuthorize("hasRole('ADMIN')")
 public class ProjectController {
 
     private final ProjectService projectService;
@@ -25,6 +27,7 @@ public class ProjectController {
         this.projectService = projectService;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'MEMBER')")
     @GetMapping()
     public Page<ProjectResponseDTO> get(
             @AuthenticationPrincipal User loggedUser,
@@ -33,6 +36,7 @@ public class ProjectController {
         return this.projectService.findAll(loggedUser, pageable).map(ProjectResponseDTO::new);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'MEMBER')")
     @GetMapping("/{id}")
     public ResponseEntity<ProjectResponseDTO> getById(
             @PathVariable Long id,

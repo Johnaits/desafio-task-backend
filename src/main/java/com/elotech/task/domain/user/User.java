@@ -26,10 +26,15 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    public User(String name, String email, String password){
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private UserRolesEnum role;
+
+    public User(String name, String email, String password, UserRolesEnum role){
         this.name = name;
         this.email = email;
         this.password = password;
+        this.role = role;
     }
 
     public User(){
@@ -38,7 +43,10 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities(){
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        if(this.role == null){
+            return List.of(new SimpleGrantedAuthority(UserRolesEnum.ROLE_MEMBER.name()));
+        }
+        return List.of(new SimpleGrantedAuthority(this.role.name()));
     }
 
     @Override

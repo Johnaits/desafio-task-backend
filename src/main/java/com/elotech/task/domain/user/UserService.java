@@ -20,7 +20,8 @@ public class UserService {
         User newUser = new User(
                 data.name(),
                 data.email(),
-                data.password()
+                data.password(),
+                data.role()
         );
         String pass = passwordEncoder.encode(newUser.getPassword());
         newUser.setPassword(pass);

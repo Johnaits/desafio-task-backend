@@ -1,12 +1,11 @@
 package com.elotech.task.config.seeder;
 
 import com.elotech.task.domain.user.User;
+import com.elotech.task.domain.user.UserRolesEnum;
 import com.elotech.task.domain.user.UserService;
 import com.elotech.task.domain.user.dto.UserRequestDTO;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -36,7 +35,7 @@ public class UserSeeder implements CommandLineRunner {
 
 
         User user = this.userService.create(
-                new UserRequestDTO("teste", DEFAULT_EMAIL, "123456")
+                new UserRequestDTO("teste", DEFAULT_EMAIL, "123456", UserRolesEnum.ROLE_ADMIN)
         );
         String message = "Usuário %s criado!";
         System.out.println(message.formatted(DEFAULT_EMAIL));
